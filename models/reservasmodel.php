@@ -55,9 +55,9 @@ class reservasomodel{
                     FROM reservas
                     WHERE quarto_id = ?
                     AND (
-                        (data_inicio <= ? AND data_fim > ?) OR
-                        (data_inicio < ? AND data_fim >= ?) OR
-                        (data_inicio >= ? AND data_fim <= ?)
+                        (inicio <= ? AND fim > ?) OR
+                        (inicio < ? AND fim >= ?) OR
+                        (inicio >= ? AND fim <= ?)
                     )";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("issssss",

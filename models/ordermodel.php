@@ -82,6 +82,7 @@ class ordersmodel{
                     $reservas[] = "quarto ($id) indisponivel";
                     continue;
                 }
+                
 
                if ( !reservaModel::isQuartoDisponivel($conn, $id, $inicio, $fim) ) {
                     $reservas[] = "quarto {$id} indisponivel no periodo de {$inicio} a {$fim}";
