@@ -1,3 +1,25 @@
+function calculoDiaria(checkIn, checkOut ) {
+    const checkIn = "2026-01-01";
+    const checkOut = "2026-01-08";
+
+    const [yin, min, din] = String(checkIn).split("-").map(Number);
+    const [yout, mout, dout] = String(checkOut).split("-").map(Number);
+
+    const tzin = Date.UTC(yin, min - 1, din);
+    const tzout = Date.UTC(yout, mout - 1, dout);
+
+    console.log("Milissegundos desde 2026-01-01 00:00:00" + tzin);
+
+    return Math.floor((tzout - tzin) / (1000 * 60 * 60 * 24));
+
+    
+
+
+}
+
+
+
+
 export default function RoomCard(itemCard, index = 0) {
     const {
         nome,
@@ -42,7 +64,7 @@ export default function RoomCard(itemCard, index = 0) {
                 <h5 class="card-title">${title}</h5>
                 <ul class="list-unstyled mb-2">
                     ${camas ? `<li>${camas}</li>` : ""}
-                    ${preco != null ? `<li>Preço: R$ ${Number(preco).toFixed(2)}</li>` : ""}
+                    ${preco != null ? `<li>Preço diária: R$ ${Number(preco).toFixed(2)}</li>` : ""}
                 </ul>
                 <a href="#" class="btn btn-primary">Reservar</a>
             </div>

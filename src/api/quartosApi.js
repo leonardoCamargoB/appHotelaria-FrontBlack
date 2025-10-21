@@ -28,3 +28,28 @@ export async function listAvailableRoomsRequest({ inicio, fim, qtd }) {
     console.log(quartos);
     return quartos;
 }
+
+export async function createRequest(nome, numero, qtd_cama_casal, qtd_cama_solteiro, preco, disponivel) {
+    const dados = {nome,numero,qtd_cama_casal, qtd_cama_solteiro, preco, disponivel};
+    const response = await fetch("api/clientes", {
+        method: "POST",
+        headers:{
+            "Accept": "application/json",
+            "Xontent-Type": "application/json"
+        },
+
+        body: JSON.stringify(dados),
+        credentials: "same-origin"
+    });
+
+    let data = null;
+    try{
+        data = await response.json();
+    } catch {
+        data = null;
+    }
+    return {
+        ok: true,
+        raw: data
+    }
+}
