@@ -42,7 +42,7 @@ class orderController {
         try {
             $resultado = ordersmodel::createOrder($conn, $data);
             return jsonResponse(['message'=> $resultado]);
-        } catch(RuntimeException $erro){
+        } catch(\Throwable $erro){
             return jsonResponse(['message' => "erro ao criar a reserva"], 500);
         }
     }

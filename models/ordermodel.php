@@ -27,7 +27,7 @@ class ordersmodel{
     }*/
 
 
-    public static function getById($conn,$id){
+    /*public static function getById($conn,$id){
         $sql = "SELECT * FROM pedidos WHERE id=?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -42,7 +42,7 @@ class ordersmodel{
         return $stmt->execute();
     }*/
 
-    public static function update($conn, $id, $data){
+   /* public static function update($conn, $id, $data){
         $sql = "UPDATE pedidos SET usuario_id = ?, cliente_id = ?, pagamento = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("iis",
@@ -51,12 +51,13 @@ class ordersmodel{
             $data["pagamento"]
         );
         return $stmt->execute();
-    }
+    }*/
 
     public static function createOrder($conn, $data){
-        $usuario_id = $data['usuario_id'];
         $cliente_id = $data['cliente_id'];
+        $usuario_id = $data['usuario_id'];
         $pagamento = $data['pagamento'];
+
         $reservas = [];
         $reservou = false;
        
@@ -78,18 +79,18 @@ class ordersmodel{
                 $inicio = $quarto["inicio"];
                 $fim = $quarto["fim"];
 
-                if(!quartomodel::lockById($conn, $id)){
+                if(!reservasmodel::lockById($conn, $id)){
                     $reservas[] = "quarto ($id) indisponivel";
                     continue;
                 }
                 
 
-               if ( !reservaModel::isQuartoDisponivel($conn, $id, $inicio, $fim) ) {
+               if ( !reservasmodel::isQuartoDisponivel($conn, $id, $inicio, $fim)) {
                     $reservas[] = "quarto {$id} indisponivel no periodo de {$inicio} a {$fim}";
                     continue;
                 }
 
-                $reserveResult = quartomodel::create($conn, [
+                $reserveResult = reservasmodel::create($conn, [
                     "pedido_id" => $order_id,
                     "quarto_id" => $id,
                     "adicional_id" => $null,
@@ -107,7 +108,7 @@ class ordersmodel{
             if ( $reservou == true ) {
                 $conn->commit();
                 return [
-                    "pedido_id" => $pedido_id,
+                    "pedido_id" => $order_id,
                     "reservas" => $reservas,
                     "message" => "Reservas criadas com sucesso!"
                 ];
