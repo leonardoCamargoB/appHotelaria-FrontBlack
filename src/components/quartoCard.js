@@ -1,4 +1,4 @@
-function calculoDiaria(checkIn, checkOut ) {
+/*function calculoDiaria(checkIn, checkOut ) {
     const checkIn = "2026-01-01";
     const checkOut = "2026-01-08";
 
@@ -15,7 +15,7 @@ function calculoDiaria(checkIn, checkOut ) {
     
 
 
-}
+}*/
 
 
 

@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . "/../models/quartomodel.php";
+require_once __DIR__ . "/../models/PhotoModel.php";
 require_once "ValidatorController.php";
+require_once "UploadController.php";
+
 
 
 class quartosController{
@@ -10,6 +13,16 @@ class quartosController{
 
         $result = quartomodel::create($conn, $data);
         if ($result){
+            if($data['foto']){
+                $pictures = UploadController::upload($data['foto']);
+                foreach($pictures['saves'] as $photos){
+                    $idPhoto = PhotoModel::create($conn, $name);
+                    if ($idPhoto){
+                        PhotoModel::createRelationRomm($conn, $result, $idPhoto);
+                    }
+                }
+            
+            }
             return jsonResponse(['message'=>"Quarto criado com sucesso"]);
         }else{
             return jsonResponse(['message'=>"Erro ao criar o quarto"], 400);
