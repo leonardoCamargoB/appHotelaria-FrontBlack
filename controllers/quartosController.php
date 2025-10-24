@@ -58,19 +58,14 @@ class quartosController{
         }
     }
     
-    public static function get_available($conn, $data){
-        ValidatorController::validate_data($data, ["inicio", "fim", "qtd"]);
-
-        $data["inicio"] = ValidatorController::fix_dateHour($data["inicio"], 14);
-        $data["fim"] = ValidatorController::fix_dateHour($data["fim"], 12);
-        
-        $result = quartomodel::get_available($conn, $data);
+    $result = RoomModel::get_available($conn, $data);
         if($result){
-            return jsonResponse(['quartos_disponiveis'=> $result]);
+            foreach ($result as &$quarto) {
+                $quarto['fotos'] = PhotoModel::getByRoomId($conn, $quarto['id']);
+            }
+            return jsonResponse(['Quartos'=> $result]);
         }else{
             return jsonResponse(['message'=> 'não tem quartos disponiveis'], 400);
-        }
-    }
 
 }
 

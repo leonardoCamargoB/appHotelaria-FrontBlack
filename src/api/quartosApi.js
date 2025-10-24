@@ -1,3 +1,30 @@
+export async function addRoom(contentForm) {
+    const formData = new FormData(contentForm);
+    const typesAccept = ['image/jpg', 'image/png'];
+    const inputFotos = contentForm.querySelector('#formFileMultiple');
+
+    const imgs = inputFotos.files;
+    for (let i = 0; i < imgs.length; i++) {
+        if (!typesAccept.includes(imgs[i].type)) {
+            throw new Error(`Arquivo  ${imgs[i].name} não é suportado. Selecione apenas arquivos nos formatos: jpg e png.`);
+        }
+        
+    }  
+    const url = 'api/rooms';
+    const response = await fetch(url, {
+        method: 'POST',
+        body: formData,
+    });
+    if (!response.ok) { 
+        throw new Error(`Erro ao enviar requisição: ${response.status}`);
+    }
+    const result = await response.json();
+    return result;
+}
+
+
+
+
 /* Listar os quartos disponíveis de acordo com inicio, fim e qtd */
 export async function listAvailableRoomsRequest({ inicio, fim, qtd }) {
     const params = new URLSearchParams();
@@ -29,27 +56,3 @@ export async function listAvailableRoomsRequest({ inicio, fim, qtd }) {
     return quartos;
 }
 
-export async function createRequest(nome, numero, qtd_cama_casal, qtd_cama_solteiro, preco, disponivel) {
-    const dados = {nome,numero,qtd_cama_casal, qtd_cama_solteiro, preco, disponivel};
-    const response = await fetch("api/clientes", {
-        method: "POST",
-        headers:{
-            "Accept": "application/json",
-            "Xontent-Type": "application/json"
-        },
-
-        body: JSON.stringify(dados),
-        credentials: "same-origin"
-    });
-
-    let data = null;
-    try{
-        data = await response.json();
-    } catch {
-        data = null;
-    }
-    return {
-        ok: true,
-        raw: data
-    }
-}

@@ -86,15 +86,17 @@ export default function FormRoom() {
   disponibilidadeContainer.appendChild(labelDisponivel);
   disponibilidadeContainer.appendChild(opcoesContainer);
   form.appendChild(disponibilidadeContainer);
- 
-  const fileInputSection = document.createElement('div');
-  fileInputSection.innerHTML = `
-    <div class="mb-3">
-  <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-  <input class="form-control" type="file" id="formFileMultiple" multiple>
-</div>
-  `;
-  form.appendChild(fileInputSection);
+
+    const inputFotos = document.createElement('input');
+    inputFotos.className = 'form-control';
+    inputFotos.type = 'file';
+    inputFotos.id = 'formFileMultiple';
+    inputFotos.multiple = true;
+    inputFotos.accept = 'image/*';
+    inputFotos.name = 'fotos[]';
+  
+
+
  
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';

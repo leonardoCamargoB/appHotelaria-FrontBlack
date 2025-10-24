@@ -1092,4 +1092,159 @@ input:focus, select:focus, textarea:focus {
   animation: fadeIn 0.6s ease forwards;
 }
 
+/* ===== ESTILOS PARA OS SELECTS DO FORMULÁRIO DE QUARTO ===== */
+.room-form select {
+    width: 100%;
+    padding: 16px 20px;
+    margin-bottom: 25px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    transition: var(--transition);
+    background: rgba(255, 253, 250, 0.9);
+    color: var(--text);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23722f37' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 16px;
+    cursor: pointer;
+}
+ 
+.room-form select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+    background-color: white;
+    transform: translateY(-2px);
+}
+ 
+.room-form select:hover {
+    border-color: rgba(114, 47, 55, 0.3);
+}
+ 
+.room-form select option {
+    padding: 12px 16px;
+    background: white;
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+}
+ 
+.room-form select option:checked {
+    background: var(--primary);
+    color: white;
+}
+ 
+.room-form select option:hover {
+    background: rgba(114, 47, 55, 0.1);
+}
+ 
+/* Container dos selects para melhor espaçamento */
+.room-form .form-select {
+    margin-bottom: 28px;
+}
+ 
+.room-form .form-select label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    font-family: 'Montserrat', sans-serif;
+}
+ 
+/* Estilo para o container dos selects */
+.select-container {
+    margin-bottom: 28px;
+    position: relative;
+}
+ 
+.select-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    font-family: 'Montserrat', sans-serif;
+}
+ 
+/* Indicador visual de foco para acessibilidade */
+.room-form select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+ 
+/* Estados de validação */
+.room-form select:invalid {
+    border-color: rgba(114, 47, 55, 0.5);
+}
+ 
+.room-form select:valid {
+    border-color: var(--border);
+}
+ 
+/* Estilo para quando um valor é selecionado */
+.room-form select:not([value=""]):not(:focus) {
+    border-color: rgba(114, 47, 55, 0.4);
+    background-color: rgba(255, 253, 250, 0.95);
+}
+ 
+/* Animações suaves para os selects */
+.room-form select {
+    animation: fadeIn 0.6s ease forwards;
+}
+ 
+/* Responsividade para os selects */
+@media (max-width: 768px) {
+    .room-form select {
+        padding: 14px 16px;
+        margin-bottom: 20px;
+        font-size: 15px;
+        background-position: right 16px center;
+    }
+    
+    .select-container {
+        margin-bottom: 24px;
+    }
+}
+ 
+@media (max-width: 576px) {
+    .room-form select {
+        padding: 12px 14px;
+        font-size: 15px;
+    }
+}
+ 
+/* Efeito de transição suave para mudanças de estado */
+.room-form select {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+ 
+/* Estilo para grupos de formulário que contêm selects */
+.form-group-select {
+    margin-bottom: 28px;
+    position: relative;
+}
+ 
+.form-group-select label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    font-family: 'Montserrat', sans-serif;
+}
+ 
+/* Seta customizada para dark mode (se necessário) */
+@media (prefers-color-scheme: dark) {
+    .room-form select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23d4af37' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    }
+}
 
+ 

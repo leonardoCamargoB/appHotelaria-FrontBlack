@@ -1,7 +1,10 @@
 import FormRoom from "../components/FormRoom.js";
 import Navbar from "../components/Navbar.js";
 import Footer from "../components/Footer.js";
+import { addRoom } from "../api/quartosApi.js";
  
+
+
 export default function renderRegisterRoom() {
     const nav = document.getElementById('navbar');
     nav.innerHTML = "";
@@ -25,7 +28,18 @@ export default function renderRegisterRoom() {
     // Adicionando título e container separadamente
     home.appendChild(titulo);
     home.appendChild(containerRoom);
-    
-    Footer();
+
+
+ contentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try { 
+            const response = await addRoom(contentForm);
+            console.log("Resposta do servidor: " + response);
+        }
+        catch (error) {
+            console.log("Erro ao enviar requisição: " + error.message);
+        }
+    })
 }
- 
+    Footer();
+
