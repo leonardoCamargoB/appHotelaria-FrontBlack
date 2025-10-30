@@ -47,7 +47,7 @@ class UploadController {
                 continue;
             }
             if ( ($photo['size'] ?? 0) > self::$maxSize) {
-                $errors[] = "Excedeu o limite (photo:{$index} de {self::$maxSize} Mb)";
+                $errors[] = "Excedeu o limite 5Mb)";
                 continue;
             }
             $info = new finfo(FILEINFO_MIME_TYPE);
@@ -79,7 +79,7 @@ class UploadController {
                 "path" => "//uploads//" . $photoName
             ];
         }
-            return["files" = $files, "errors" =  $errors, "saves" = $saves];
+            return["files" => $files, "errors" =>  $errors, "saves" => $saves];
     }      
    
 }

@@ -1,6 +1,6 @@
 <?php
 
-class reservasomodel{
+class reservasmodel{
     public static function create($conn, $data){
         $sql = "INSERT INTO reservas(pedido_id, quarto_id, adicional_id, fim, inicio) VALUES(?, ?, ?, ?, ?)"; 
 

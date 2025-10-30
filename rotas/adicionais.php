@@ -12,15 +12,18 @@ if ( $_SERVER['REQUEST_METHOD'] === "GET" ){
     }
 }
 elseif ( $_SERVER['REQUEST_METHOD'] === "POST" ){
+    validateTokenAPI("Funcionario");
     $data = json_decode( file_get_contents('php://input'), true );
     adicionaisController::create($conn, $data);
 }
 elseif ( $_SERVER['REQUEST_METHOD'] === "PUT" ){
+    validateTokenAPI("Funcionario");
     $data = json_decode( file_get_contents('php://input'), true );
     $id = $data['id'];
     adicionaisController::update($conn, $id, $data);
 }
 elseif ( $_SERVER['REQUEST_METHOD'] === "DELETE" ){
+    validateTokenAPI("Funcionario");
     $data = json_decode( file_get_contents('php://input'), true );
     $id = $data['id'];
     if (isset($id)){
@@ -31,9 +34,7 @@ elseif ( $_SERVER['REQUEST_METHOD'] === "DELETE" ){
 }
 else{
     jsonResponse([
-        'status'=>'erro',
-        'message'=>'Método não permitido'
-    ], 405);
+        'status'=>'erro','message'=>'Método não permitido'], 405);
 }
 
 ?>

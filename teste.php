@@ -7,10 +7,10 @@ require_once __DIR__ . "/controllers/clienteController.php";
 
 
 
-$title = "HOME";
+// $title = "HOME";
 
 
-
+echo passwordController::passwordHash("123");
 
 
 

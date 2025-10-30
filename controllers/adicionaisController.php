@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../models/adicionaismodel.php";
+require_once __DIR__ . "/../models/adicionasmodel.php";
 require_once "ValidatorController.php";
 
 class adicionaisController{
@@ -25,7 +25,7 @@ class adicionaisController{
     }
 
     public static function delete($conn, $id){
-        $result = AdditionadicionaismodelalModel::delete($conn, $id);
+        $result = adicionaismodel::delete($conn, $id);
         if ($result){
             return jsonResponse(['message'=>"Adicional excluido com sucesso"]);
         }else{

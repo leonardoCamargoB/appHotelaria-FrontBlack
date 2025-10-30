@@ -44,12 +44,13 @@ class clientesmodel{
 
     public static function delete($conn, $id){
         $sql = "DELETE FROM clientes WHERE id=?";
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
 
     public static function validateClient($conn, $email, $password) {
-        $sql = "SELECT c.id, c.email, c.senha, c.nome, cargos.nome FROM clientes AS c 
+        $sql = "SELECT c.id, c.email, c.senha, c.nome, cargos.nome AS cargo FROM clientes AS c
         JOIN cargos ON cargos.id = c.cargo_id
         WHERE c.email = ?";
         $stmt = $conn->prepare($sql);
@@ -58,7 +59,7 @@ class clientesmodel{
         $result = $stmt->get_result();
  
         if($client = $result->fetch_assoc()) {
-            if(PasswordController::validateHash($password, $client['senha'])) {
+            if(PasswordController::passwordVerificar($password, $client['senha'])) {
                 unset($client['senha']);
                 return $client;
             }

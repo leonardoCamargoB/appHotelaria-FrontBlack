@@ -5,10 +5,10 @@ require_once __DIR__ . "/../models/reservasmodel.php";
 class reservasController{
     
     public static function create($conn, $data){
-        ValidatorController::validate_data($data, ["pedido_id", "quarto_id", "adicional_id", "inicio", "fim"])
+        ValidatorController::validate_data($data, ["pedido_id", "quarto_id", "adicional_id", "inicio", "fim"]);
 
-        $data["inicio"] = ValidatorController::fix_dateHour($data["inicio"], 14)
-        $data["fim"] = ValidatorController::fix_dateHour($data["fim"], 12)
+        $data["inicio"] = ValidatorController::fix_dateHour($data["inicio"], 14);
+        $data["fim"] = ValidatorController::fix_dateHour($data["fim"], 12);
 
         $result = reservasmodel::create($conn, $data);
         if($result){
@@ -18,9 +18,5 @@ class reservasController{
         }
     }
    
-    public static function searchByRequest($conn, $pedido_id) {
-        $result = reservasmodel::searchByRequest($conn, $pedido_id);
-        return jsonResponse($result);
-    }  
 }
 ?>

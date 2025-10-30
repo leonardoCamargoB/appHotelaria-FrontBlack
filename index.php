@@ -1,6 +1,7 @@
 <?php
 require_once "config/database.php";
 require_once "helpers/response.php";
+require_once "helpers/token_jwt.php";
  
 if ($erroDB) {
     echo "Erro no Site";
@@ -17,8 +18,8 @@ $segment = explode("/", trim($uri, "/"));
 $route = $segment[0] ?? null;
 $subRoute = $segment[1] ?? null;
 if ($route != "api"){
-    require __DIR__ . "/public/index.html";
-    //require  'teste.php';
+    // require __DIR__ . "/public/index.html";
+    require 'teste.php';
     exit;
 }
 elseif($route === "api"){
@@ -33,6 +34,4 @@ else{
     echo "404 pagina nao encontrada";
     exit;
 }
-echo var_dump($segment);
 ?>
- 

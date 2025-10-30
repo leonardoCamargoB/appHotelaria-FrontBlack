@@ -1,12 +1,12 @@
 <?php
-require_once __DIR__ . "/../models/ClientModel.php";
+require_once __DIR__ . "/../models/clientesmodel.php";
 require_once __DIR__ . "/../helpers/token_jwt.php";
 require_once "AuthController.php";
 require_once "PasswordController.php";
 require_once "ValidatorController.php";
 
 
-class clientController{
+class clienteController{
 
     public static function create($conn, $data){
         ValidatorController::validate_data($data, ["nome", "cpf", "telefone", "email", "senha"]);
@@ -16,8 +16,8 @@ class clientController{
             "password" => $data['senha']
         ];
 
-        $data['senha'] = PasswordController::generateHash($data['senha']);
-        $result = clientestmodel::create($conn, $data);
+        $data['senha'] = PasswordController::passwordHash($data['senha']);
+        $result = clientesmodel::create($conn, $data);
         if ($result){
             // se o usuario estiver -> efetuar o login
             // para retornar o Token JWT
@@ -28,17 +28,17 @@ class clientController{
     }
 
     public static function getAll($conn){
-        $clientList = clientestmodel::getAll($conn);
+        $clientList = clientesmodel::getAll($conn);
         return jsonResponse($clientList);
     }
 
     public static function getById($conn, $id){
-        $client = clientestmodel::getById($conn, $id);
+        $client = clientesmodel::getById($conn, $id);
         return jsonResponse($client);
     }
 
     public static function delete($conn, $id){
-        $result = clientestmodel::delete($conn, $id);
+        $result = clientesmodel::delete($conn, $id);
         if ($result){
             return jsonResponse(['message'=>"Cliente excluido com sucesso"]);
         }else{
@@ -49,7 +49,7 @@ class clientController{
     public static function update($conn, $id, $data){
         ValidatorController::validate_data($data, ["nome", "cpf", "telefone", "email"]);
 
-        $result = clientestmodel::update($conn, $id, $data);
+        $result = clientesmodel::update($conn, $id, $data);
         if($result){
             return jsonResponse(['message'=> 'Cliente atualizado com sucesso']);
         }else{

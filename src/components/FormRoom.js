@@ -97,6 +97,16 @@ export default function FormRoom() {
   
 
 
+ /*contentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try { 
+            const response = await addRoom(contentForm);
+            console.log("Resposta do servidor: " + response);
+        }
+        catch (error) {
+            console.log("Erro ao enviar requisição: " + error.message);
+        }
+    })*/
  
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';

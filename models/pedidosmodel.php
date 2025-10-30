@@ -15,7 +15,7 @@ class pedidosmodel{
 
     public static function getAll($conn){
         $Myssql = "SELECT * FROM reservas";
-        $result = $conn->query("$Mysql");
+        $result = $conn->query($Myssql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -28,10 +28,10 @@ class pedidosmodel{
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public static function delete($conn $id){
+    public static function delete($conn, $id){
         $sql = "DELETE FROM reservas WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt_bin_param("i", $id);
+        $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
 
@@ -42,7 +42,7 @@ class pedidosmodel{
             $data["usuario_id"],
             $data["cliente_id"],
             $data["pagamento"]
-        )/
+    );
         return $stmt->execute();
     }
 
