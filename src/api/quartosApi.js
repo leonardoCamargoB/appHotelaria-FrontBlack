@@ -1,58 +1,83 @@
-export async function addRoom(contentForm) {
-    const formData = new FormData(contentForm);
-    const typesAccept = ['image/jpg', 'image/png'];
-    const inputFotos = contentForm.querySelector('#formFileMultiple');
-
+export async function cadRoom(formu) {
+    const formData = new FormData(formu);
+    const typeAccept = ['image/jpeg', 'image/png'];
+    const inputFotos = formu.querySelector('#formFileMultiple');
     const imgs = inputFotos.files;
     for (let i = 0; i < imgs.length; i++) {
-        if (!typesAccept.includes(imgs[i].type)) {
-            throw new Error(`Arquivo  ${imgs[i].name} não é suportado. Selecione apenas arquivos nos formatos: jpg e png.`);
-        }
-        
-    }  
-    const url = 'api/rooms';
+        if(!typeAccept.includes(imgs[i].type)) {
+            throw new Error(`Arquivo "${imgs[i].name}" não é suportado.
+            Selecione um arquivo JPG ou PNG`);
+        }}
+    const url = `api/quartos`;
     const response = await fetch(url, {
-        method: 'POST',
-        body: formData,
+        method: "POST",
+        body: formData
     });
-    if (!response.ok) { 
+    // Interpreta a resposta como JSON
+    let result = null;
+    try {
+        result = await response.json();
+    }
+    catch {
+        // Se não for JSON válido, result permanece null
+        result = null;
+    }
+    if(!response.ok) {
         throw new Error(`Erro ao enviar requisição: ${response.status}`);
     }
-    const result = await response.json();
-    return result;
-}
+    return result; }   
 
 
 
 
 /* Listar os quartos disponíveis de acordo com inicio, fim e qtd */
-export async function listAvailableRoomsRequest({ inicio, fim, qtd }) {
-    const params = new URLSearchParams();
-    if (inicio) params.set("inicio", inicio);
-    if (fim) params.set("fim", fim);
-    if (qtd !== null && qtd !== "") params.set("qtd", String(qtd));
-
-    const url = `api/rooms/disponiveis?${params.toString()}`;
-    const response = await fetch(url, {
-        method: "GET",
-        headers: {
-            "Accept": "application/json",
-        },
-        credentials: "same-origin"
-    });
-    let data = null;
+export async function listAllRoomRequest(inicio, fim, qtd) {
+    const dados = {
+        inicio: inicio,
+        fim: fim,
+        qtd: qtd
+    };
+    
     try {
-        data = await response.json();
+        const response = await fetch("api/quartos", {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dados),
+            credentials: "same-origin"
+        });
+        
+        const responseText = await response.text();
+        
+        let data = null;
+        try {
+            data = JSON.parse(responseText);
+        } catch (error) {
+            data = null;
+        }
+
+        if (!response.ok) {
+            const message = data?.message || "Resposta inválida do servidor!";
+            return {
+                ok: false, 
+                raw: data, 
+                message: message
+            };
+        }
+
+        return {
+            ok: true,
+            raw: data
+        };
+
+    } catch (error) {
+        return {
+            ok: false,
+            raw: null,
+            message: `Erro de rede: ${error.message}`
+        };
     }
-    catch {
-        data = null;
-    }
-    if (!response.ok) {
-        const msg = data?.message || "Falha ao buscar quartos disponíveis!";
-        throw new Error(msg);
-    }
-    const quartos = Array.isArray(data?.Quartos) ? data.Quartos : [];
-    console.log(quartos);
-    return quartos;
 }
 

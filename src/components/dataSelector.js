@@ -17,13 +17,14 @@ export default function DateSelector() {
    
     const guestAmount = document.createElement('select');
     guestAmount.className = 'card p-3 shadow-lg inputDate';
-    guestAmount.innerHTML = `
+    guestAmount.innerHTML =
+    `
     <option value="0">Quantas Pessoas?</option>
     <option value="1">1 pessoa</option>
     <option value="2">2 pessoas</option>
     <option value="3">3 pessoas</option>
     <option value="4">4 pessoas</option>
-    <option value="5">5 ou mais pessoas</option>`;
+    <option value="5">5 ou mais pessoas</option>`
    
     const btnSearchRoom = document.createElement('button');
     btnSearchRoom.type = 'button';

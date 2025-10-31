@@ -1,19 +1,44 @@
+import { getToken } from "./authApi.js";
+
 export async function finishedOrder(){
     const url = "api/order/reservation";
 
     const body = {
 
-       cliente_id: 1,
-
-       pagamento: "pix",
-       quartos: getTotalItems.map(it => (
+       pagamento: metodoPagamento,
+       quartos: reservations.map(it => (
         {
-         id: it.roomId,
+         id: it.id,
          inicio: it.checkIn,
-         fim: it.checkOut
+         fim: it.checkOut 
         }
        ))
 };
+
+    const token = getToken?.();
+    const res = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        credentials: "same-origin",
+        body: JSON.stringify(body)
+    });
+    let data = null;
+    try {
+        data = await res.json();
+    }  catch { data = null; }
+    if(!res.ok) {
+        const message = `Erro ao enviar o pedido: ${res.status}`;
+        return {ok: false, raw: data, message};
+    } return {
+        ok: true,
+        raw: data,
+    }
+}
+
     const resp = await fetch(url, {
         method: "POST",
         headers: {
@@ -38,4 +63,3 @@ export async function finishedOrder(){
         ok: true,
         raw: data,
     }
-}

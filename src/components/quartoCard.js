@@ -1,6 +1,10 @@
-/*function calculoDiaria(checkIn, checkOut ) {
-    const checkIn = "2026-01-01";
-    const checkOut = "2026-01-08";
+import { addItemToHotel_Cart } from "../store/cartStore.js";
+// import dataSelector from "./DateSelector.js";
+import Modal from "./modal.js";
+
+function calculoDiaria(checkIn, checkOut ) {
+    // const checkIn = "2026-01-01";
+    // const checkOut = "2026-01-08";
 
     const [yin, min, din] = String(checkIn).split("-").map(Number);
     const [yout, mout, dout] = String(checkOut).split("-").map(Number);
@@ -8,20 +12,18 @@
     const tzin = Date.UTC(yin, min - 1, din);
     const tzout = Date.UTC(yout, mout - 1, dout);
 
-    console.log("Milissegundos desde 2026-01-01 00:00:00" + tzin);
+    // console.log("Milissegundos desde 2026-01-01 00:00:00" + tzin);
 
     return Math.floor((tzout - tzin) / (1000 * 60 * 60 * 24));
 
-    
-
-
-}*/
+}
 
 
 
 
 export default function RoomCard(itemCard, index = 0) {
     const {
+        id,
         nome,
         numero,
         qnt_cama_casal,
@@ -70,6 +72,37 @@ export default function RoomCard(itemCard, index = 0) {
             </div>
         </div>
     `;
+
+    card.querySelector('a').addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const idDateCheckIn = document.getElementById('id-dateCheckIn');
+        const idDateCheckOut = document.getElementById('id-dateCheckOut');
+        const guestAmount = document.getElementById('id-guestAmount');
+
+        if (!inicio || !fim || Number.isNaN(qtd) || qtd <= 0) {
+            console.log("Preencha todos os campos!");
+            return;
+        }
+
+        const daily = calculoDiaria(inicio, fim);
+
+        const subtotal = parseFloat(preco) * daily;
+        const newItemReserve = {
+            id,
+            nome,
+            checkIn: inicio,
+            checkOut: fim,
+            guest: qtd,
+            daily,
+            subtotal
+        };
+        addItemToHotel_Cart(newItemReserve);
+        alert(`Reserva do quarto adicionada: ${nome}
+            - Preço/diária: R$ ${preco}
+            - Diárias: ${daily}
+            - Subtotal: R$ ${subtotal}`);
+    });
  
     return card;
 }

@@ -1,7 +1,7 @@
 import FormRoom from "../components/FormRoom.js";
 import Navbar from "../components/Navbar.js";
 import Footer from "../components/Footer.js";
-import { addRoom } from "../api/quartosApi.js";
+import { cadRoom } from "../api/quartosApi.js";
  
 
 
@@ -33,7 +33,7 @@ export default function renderRegisterRoom() {
  contentForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         try { 
-            const response = await addRoom(contentForm);
+            const response = await cadRoom(contentForm);
             console.log("Resposta do servidor: " + response);
         }
         catch (error) {
